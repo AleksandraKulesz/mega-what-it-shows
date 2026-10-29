@@ -27,6 +27,18 @@ src/lib/data/       exports from the ticket system
 - A decision is never edited after it is accepted. A new record replaces it.
 - A page you add is signed: its frontmatter carries your `signature` and it ends with `<RenderStamp {signature} />`, so the desk knows who wrote it.
 
+## Build
+
+The export shipped without a build. This repo adds one: SvelteKit + mdsvex, prerendered to static HTML.
+
+```
+npm install
+npm run build        # pages land in build/
+```
+
+`rendered/kb/incidents/4471-split.html` is the built page, copied from `build/kb/incidents/4471-split.html`.
+The desk reads this rendered page, not the `.svx`.
+
 ## Owners
 
 Support desk. Decision records: whoever signed them.

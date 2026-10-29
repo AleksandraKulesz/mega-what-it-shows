@@ -20,12 +20,19 @@ signature: AleksandraKulesz
 </script>
 
 [#4471](/kb/incidents/4471) merged every report about wrong dates into one ticket and marked it
-known: one bug, one fix queued. Read one by one, the reports describe more than one problem.
-The queued parser fix closes only the first row below.
+known: one bug, one fix. Read one by one, the reports describe more than one problem.
+Engineering closed #4471 on 5 Oct with a parser fix (`fix(dates): parse dd/mm for eu locales`).
+That fix closes only the first row below.
 
 <Callout kind="warn">
 #4471 is not one issue. Each problem below has its own ticket now.
 </Callout>
+
+## Where each problem stands
+
+- **parser**: fixed by `fix(dates): parse dd/mm for eu locales`.
+- **hint**: won't fix. The booking-v3 form is retired.
+- **one-day**: no fix and no owner yet. The parser fix does not reach it. Its ticket stays open.
 
 ## The problems
 
@@ -37,7 +44,7 @@ The queued parser fix closes only the first row below.
   booking-v3 date form. Day and month swap: 7 April turns into 4 July.
 - **hint**: the report came through the booking-v3 form. The form prints `MM/DD/YYYY` under the
   date field, people type the month first, and the form reads it day first. The parser fix
-  does not touch this form.
+  does not touch this form, and the form is retired.
 - **one-day**: the reports the desk already read as one-day moves (`desk-notes.json`). The date
   moves by a day, or differs between Lisbon and Toronto. That is a time zone problem, not a
   swap. The desk files them under parser by tenant, so they are counted there as well and
