@@ -4,7 +4,7 @@ title: '#4471, split: what the date reports show'
 owner: AleksandraKulesz
 status: open
 reviewed: 2026-10-29
-signature: AleksandraKulesz
+signature: v1.eyJzdWIiOiI2NTUwIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyODQwMjAsImV4cCI6MTc5MzM3MDQyMH0.DeVlgUEMT7uR4h7JqmlzrUxov3gI0ho_vijx4HzC2P4
 ---
 
 <script>
