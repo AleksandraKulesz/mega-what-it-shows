@@ -1,0 +1,54 @@
+---
+layout: runbook
+title: '#4471, split: what the date reports show'
+owner: AleksandraKulesz
+status: open
+reviewed: 2026-10-29
+signature: AleksandraKulesz
+---
+
+<script>
+  import ProblemSplit from '#lib/kb/ProblemSplit.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const issues = {
+    parser: 'https://github.com/AleksandraKulesz/mega-what-it-shows/issues/1',
+    hint: 'https://github.com/AleksandraKulesz/mega-what-it-shows/issues/2',
+    'one-day': 'https://github.com/AleksandraKulesz/mega-what-it-shows/issues/3',
+  };
+</script>
+
+[#4471](/kb/incidents/4471) merged every report about wrong dates into one ticket and marked it
+known: one bug, one fix queued. Read one by one, the reports describe more than one problem.
+The queued parser fix closes only the first row below.
+
+<Callout kind="warn">
+#4471 is not one issue. Each problem below has its own ticket now.
+</Callout>
+
+## The problems
+
+<ProblemSplit ticket={4471} {issues} />
+
+## How each report was placed
+
+- **parser**: the tenant writes dates day first and the report did not come through the
+  booking-v3 date form. Day and month swap: 7 April turns into 4 July.
+- **hint**: the report came through the booking-v3 form. The form prints `MM/DD/YYYY` under the
+  date field, people type the month first, and the form reads it day first. The parser fix
+  does not touch this form.
+- **one-day**: the reports the desk already read as one-day moves (`desk-notes.json`). The date
+  moves by a day, or differs between Lisbon and Toronto. That is a time zone problem, not a
+  swap, and `CauseTable` used to count these under parser.
+
+The tenant decides the cause, not the intake tag: intake tags `hint` from an `en-US` browser,
+which misses most hint reports and tags parser reports as hint. The export also repeats some
+reports across overlapping pages; every count here is one id, one report.
+
+## Lessons
+
+- A subject line says how a report feels, not what broke. Split by cause before you count.
+- A note the desk keeps on the side (`oneDayMove`) is a finding. Give it a row, not a footnote.
+
+<RenderStamp {signature} />
