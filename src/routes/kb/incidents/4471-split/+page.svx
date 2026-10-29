@@ -40,7 +40,8 @@ The queued parser fix closes only the first row below.
   does not touch this form.
 - **one-day**: the reports the desk already read as one-day moves (`desk-notes.json`). The date
   moves by a day, or differs between Lisbon and Toronto. That is a time zone problem, not a
-  swap, and `CauseTable` used to count these under parser.
+  swap. The desk files them under parser by tenant, so they are counted there as well and
+  have their own row and ticket.
 
 The tenant decides the cause, not the intake tag: intake tags `hint` from an `en-US` browser,
 which misses most hint reports and tags parser reports as hint. The export also repeats some

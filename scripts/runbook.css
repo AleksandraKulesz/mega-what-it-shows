@@ -29,3 +29,4 @@ aside.warn { border-color: var(--warn); background: var(--warn-bg); }
 .stamp { margin: 2rem 0 0; font: 0.85rem var(--mono); color: var(--muted); }
 .stamp b { color: var(--accent); letter-spacing: 0.04em; }
 .missing { color: var(--warn); }
+.note { color: var(--muted); font-size: 0.85em; }

@@ -30,7 +30,7 @@
     {#each split.rows as row (row.problem)}
       <tr>
         <td><code>{row.problem}</code></td>
-        <td>{WHAT[row.problem]}</td>
+        <td>{WHAT[row.problem]}{#if row.filedUnder?.length}<span class="note"> · also counted under {row.filedUnder.join(', ')}</span>{/if}</td>
         <td>{row.reports}</td>
         <td>{row.tenants}</td>
         <td>{row.firstSeen} → {row.lastSeen}</td>
@@ -42,4 +42,5 @@
 
 <style>
   .sum { font-size: 1.1rem; }
+  .note { color: var(--muted); font-size: 0.85em; }
 </style>

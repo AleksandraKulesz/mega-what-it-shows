@@ -45,9 +45,7 @@ def split_ticket(ticket):
     by = {}
     for r in merged:
         t = tenants.get(r['tenant'])
-        if r['id'] in one_day:
-            p = 'one-day'
-        elif not t or t['locale'] not in DAY_FIRST:
+        if not t or t['locale'] not in DAY_FIRST:
             p = 'unplaced'
         else:
             p = 'hint' if r['channel'] == 'form' and HINT[t['form']].startswith('MM') else 'parser'
@@ -57,6 +55,11 @@ def split_ticket(ticket):
         days = sorted(r['receivedAt'][:10] for r in rs)
         rows.append(dict(problem=p, reports=len(rs), tenants=len({r['tenant'] for r in rs}), first=days[0], last=days[-1]))
     rows.sort(key=lambda r: -r['reports'])
+    moved = [r for r in merged if r['id'] in one_day]
+    if moved:
+        days = sorted(r['receivedAt'][:10] for r in moved)
+        filed = [x['problem'] for x in rows if any(r['id'] in one_day for r in by[x['problem']])]
+        rows.append(dict(problem='one-day', reports=len(moved), tenants=len({r['tenant'] for r in moved}), first=days[0], last=days[-1], filed=filed))
     return len(merged), rows
 
 def inline(s):
@@ -68,7 +71,8 @@ def inline(s):
 def problem_split(ticket, issues):
     merged, rows = split_ticket(ticket)
     body = ''.join(
-        f'<tr><td><code>{r["problem"]}</code></td><td>{WHAT[r["problem"]]}</td><td>{r["reports"]}</td>'
+        f'<tr><td><code>{r["problem"]}</code></td><td>{WHAT[r["problem"]]}'
+        + (f'<span class="note"> · also counted under {", ".join(r["filed"])}</span>' if r.get('filed') else '') + f'</td><td>{r["reports"]}</td>'
         f'<td>{r["tenants"]}</td><td>{r["first"]} → {r["last"]}</td><td>'
         + (f'<a href="{issues[r["problem"]]}">#{issues[r["problem"]].rsplit("/", 1)[1]}</a>' if r['problem'] in issues else 'none yet')
         + '</td></tr>' for r in rows)
